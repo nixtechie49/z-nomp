@@ -232,7 +232,7 @@ function paymentList(update) {
 });
 
 var ZCLMined = 0;
-var totalShares = workerPaymentJson[0].
+var totalShares = 0;
 var minerShares = 0;
 var totalPaidOut = 0;
 
@@ -240,7 +240,7 @@ var totalPaidOut = 0;
         for (var p in workerPaymentJson[i].payments) {
 						var blockWork = p.work[_miner];
 							if(blockWork){
-								minerShares += 
+								minerShares += p.work[_miner];
 							}
 						totalShares += p.shares;	
 						totalPaidOut += p.paid;
@@ -248,6 +248,9 @@ var totalPaidOut = 0;
     }
 	
 	ZCLMined = (minerShares/totalShares) * totalPaidOut;
+	if(!ZCLMined){
+		ZCLMined = 0;
+	}
 	
     $("span#ZCLMined").text(ZCLMined);
 	$("span#BTCPTotal").text(ZCLMined * 1.25);
