@@ -9,28 +9,6 @@ var totalBal;
 var totalPaid;
 var totalShares;
 
-var statpool;
-var statluckpool;
-var network;
-var sharecountpool;
-var blocksJson;
-var update = false;
-
-$.getJSON('/api/stats', function(statsSourcePOOL) {
-    var stattts = statsSourcePOOL;
-    statpool = (((stattts.algos.equihash.hashrate) / 1000) / 1000) * 2;
-    network = stattts.pools.bitcoinz.poolStats.networkSols;
-    statluckpool = (network / statpool * 152) / (24 * 60 * 60);
-    sharecountpool = stattts.pools.bitcoinz.shareCount;
-    netdiff = stattts.pools.bitcoinz.poolStats.networkDiff;
-});
-
-		$("#addtodash").click( function(e) {
-				localStorage.vmAddress = statData.miner;
-				alert("Dashboard Address Set. Redirecting to dashboard...");
-				window.location.href = "/dashboard";
-		});
-
 function getReadableHashRateString(hashrate) {
     hashrate = (hashrate * 2);
     if (hashrate < 1000000) {
@@ -252,78 +230,27 @@ function paymentList(update) {
     container : 'body'
   });
 });
-    var htmlpayadd = "";
-	var prehtmlpayadd = ""
-							for(var i in workerPaymentJson){
-									for(var block in workerPaymentJson[i].pending.blocks){
-									if(!block){return}
-								var pendingBlockFinder = workerPaymentJson[i].pending.blocks[block].split(":")[3].split(".")[0]
-								var date = parseInt(workerPaymentJson[i].pending.blocks[block].split(":")[4]);
-								var txid = workerPaymentJson[i].pending.blocks[block].split(":")[1];
-								var blockid = workerPaymentJson[i].pending.blocks[block].split(":")[2];
-								var hex = workerPaymentJson[i].pending.blocks[block].split(":")[0];
-								var confirms = workerPaymentJson[i].pending.confirms[hex];
-					if(!update){
-                    prehtmlpayadd += '<tr>';
-                    prehtmlpayadd += '<td>' + toStandardizedDate(date) + '</td>';
-                    prehtmlpayadd += '<td><a href="https://explorer.bitcoinz.site/tx/' + txid + '" title="View transaction" target="_blank"> ' + blockid + '</a></td>';
-					if(pendingBlockFinder == _miner){
-					prehtmlpayadd += '<td data-toggle="tooltip" data-placement="top" data-container="body" title = "You discovered this PENDING block and will be paid an extra 1000 BTCZ after block confirmation" style="color:green;"><span style="color:red;"><i class="fa fa-money fa-spin" style="color:green"></i>&nbsp;' + '<span id="' + blockid + '-confirms">' + confirms + '</span> of 100 Confirmations</span>&nbsp;';
-					} else {
-						prehtmlpayadd += '<td><span style="color:red;"><i class="fa fa-spinner fa-spin"></i>&nbsp;' + '<span id="' + blockid + '-confirms">' + confirms + '</span> of 100 Confirmations</span>';
-					}
-					htmlpayadd += '</tr>';
-					} else {
-							
-						$("#" + blockid + "-confirms").text(confirms);
-						
-					}
-									}
-							}
-							if(!update){
-							htmlpayadd += prehtmlpayadd;
-							}
-							
-							
-							
-	
-	
+
+var ZCLMined = 0;
+var totalShares = workerPaymentJson[0].
+var minerShares = 0;
+var totalPaidOut = 0;
+
     for (var i in workerPaymentJson) {		
         for (var p in workerPaymentJson[i].payments) {
-            for (var t in workerPaymentJson[i].payments[p].amounts) {
-				
-                if (t.startsWith(_miner)) {
-					if(x < 5){
-					
-						var paidBlock = "";
-						
-													var blockNum = workerPaymentJson[i].payments[p].blocks;
-							if(blocksJson && blockNum){
-								getBlockInfo = blocksJson['bitcoinz-'+blockNum];
-								if(getBlockInfo){
-								paidBlock = getBlockInfo.split(":")[3].split(".")[0];
-								}
+						var blockWork = p.work[_miner];
+							if(blockWork){
+								minerShares += 
 							}
-				if(!update){
-                    htmlpayadd += '<tr>';
-                    htmlpayadd += '<td>' + toStandardizedDate(workerPaymentJson[i].payments[p].time) + '</td>';
-                    htmlpayadd += '<td><a href="https://explorer.bitcoinz.site/tx/' + workerPaymentJson[i].payments[p].txid + '" title="View transaction" target="_blank"> ' + blockNum + '</a></td>';
-					if(paidBlock == _miner){
-					htmlpayadd += '<td data-toggle="tooltip" data-placement="top" data-container="body" title = "You discovered this block and were paid an extra 1000 BTCZ" style="color:green; font-weight:bold;"><i class="fa fa-money"></i>&nbsp;' + (workerPaymentJson[i].payments[p].amounts[t]).toFixed(4) + ' Bitcoinz</td>';
-					} else {
-                    htmlpayadd += '<td>' + (workerPaymentJson[i].payments[p].amounts[t]).toFixed(4) + ' Bitcoinz</td>';
-					}
-                    htmlpayadd += '</tr>';
-					x++
-                } else {
-					
-				}
-					}
-				}
-            }
+						totalShares += p.shares;	
+						totalPaidOut += p.paid;
         }
     }
-    $("#paymentlist tbody").append(htmlpayadd);
+	
+	ZCLMined = (minerShares/totalShares) * totalPaidOut;
+	
+    $("span#ZCLMined").text(ZCLMined);
+	$("span#BTCPTotal").text(ZCLMined * 1.25);
 }
 
 function rebuildWorkerDisplay() {
