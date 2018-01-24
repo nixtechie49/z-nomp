@@ -226,7 +226,7 @@
   </div>
   <div class="tab-pane fade" id="pills-linux-nheq" role="tabpanel" aria-labelledby="pills-linux-tab-nheq">
   <span>Make sure start.bat file file looks like this:</span><pre class="pre-help">CPU:
-./nheqminer -l [REGION].{{=info.host}}.com:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x
+./nheqminer -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x
 OpenCL 4 devices:
 ./nheqminer -l {{=it.portalConfig.website.stratumHost}}:[port] -u YOUR_WALLET_ADDRESS/YOUR_WORKER_NAME -p x -od 0 1 2 3
 OpenCL 6 devices:
@@ -260,11 +260,9 @@ CUDA 6 devices:
 		var diff = info.ports[port].diff;
 		if (diff < 0.1) {
 			var device = 'CPU';
-		} else if (diff < 0.2) {
+		} else if (diff < 6) {
 			var device = 'GPU';
-		} else if (diff < 0.5) {
-			var device = 'GPU Rig';
-		} else if (diff < 5) {
+		} else if (diff < 11) {
 			var device = 'GPU Farm';
 		} else {
 			var device = 'Nicehash';
