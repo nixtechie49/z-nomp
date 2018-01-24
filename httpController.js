@@ -23,8 +23,8 @@ var saveEntry = function(req, res) {
       return res.status(500).send({err: err})
     })
 }
-app.post('/saveEntry', saveEntry) 
+app.post('/entry', saveEntry)
 
-app.listen(3000, () => console.log('Express App listening on port 3000!'))
+app.listen(8000, () => console.log('Express App listening on port 8000!'))
 
 
