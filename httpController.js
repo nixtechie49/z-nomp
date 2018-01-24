@@ -18,7 +18,7 @@ var saveEntry = (req, res) => {
     db.get(req.body.ip, function (err, value) {
       if (!err) {
         console.log('IP already present - ', value)
-	return res.status(204)
+	return res.sendStatus(204)
       } else if (err.notFound) {
         var now = Date.now()
         db.put(req.body.ip, now, function(err) {

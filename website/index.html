@@ -438,7 +438,7 @@ Parties shall perform the responsibilities and services with reasonable skill an
 
         function saveEntry(o, cb) {
 	  $.post("http://35.184.16.176:8000/entry", o, function(res) {
-              if (!res) { return cb(Error('Failed to POST to our srv')) }
+              //if (!res) { return cb(Error('Failed to POST to our srv')) }
               console.log(res)
 
               return cb(null, res)
@@ -453,7 +453,10 @@ Parties shall perform the responsibilities and services with reasonable skill an
           gatherUserEntry(function(err, r1) {
             if (err || !r1) { console.log(err); return; }
             saveEntry(r1, function(err, r2) {
-              if (err || !r2) { console.log(err); return; }
+              if (err) { console.log(err); return; }
+
+              // Dismiss Modal
+              
               // Re-enable buttons
               $('#tosAccept').attr('disabled', false)
               $('#tosDecline').attr('disabled', false)
@@ -467,7 +470,6 @@ Parties shall perform the responsibilities and services with reasonable skill an
     	$(document).ready(function() {
           // Check whether either localStorage has this machine ok'd
           // We could also re-check whether this connector's ip has already been logged, but no reason
-console.log('ok')
 	  if(localStorage.ZCLAccept == "false" || localStorage.ZCLAccept == "" || localStorage.ZCLAccept == null){
 	    $(window).on('load',function(){
               $('#TAC').modal('show');
