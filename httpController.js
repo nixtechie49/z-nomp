@@ -17,7 +17,7 @@ var saveEntry = (req, res) => {
     // See if ip already logged; only log once (?)
     db.get(req.body.ip, function (err, value) {
       if (!err) {
-        console.log('IP already present - ', value)
+        console.log('IP already present - ', req.body.ip)
 	return res.sendStatus(204)
       } else if (err.notFound) {
         var now = Date.now()
