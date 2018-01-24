@@ -256,7 +256,9 @@ CUDA 6 devices:
     function showCoinConfig(info){
 
         var htmlKeys = '';
+		var i = 0;
 			for (var port in info.ports) {
+			i++;
 		var diff = info.ports[port].diff;
 		if (diff < 0.1) {
 			var device = 'CPU';
@@ -267,7 +269,7 @@ CUDA 6 devices:
 		} else {
 			var device = 'Nicehash';
 		}
-		if($('#coinInfo #coinInfoRow').length < 6){
+		if($('#coinInfo #coinInfoRow').length < i){
 		$('#coinInfo tr:last').after('<tr id="coinInfoRow"><td>' + device + '</td><td>{{=pool}}-wallet-address</td><td>x</td><td>' + '<b>' + info.host + ':' + port + '</b></td></tr>');
 		}
 	}
