@@ -432,17 +432,17 @@ Parties shall perform the responsibilities and services with reasonable skill an
 
 	      //localStorage.Timestamp = o.date 
 	      //localStorage.IpAddress = o.ip
-              return cb(null, res)
+              return cb(null, o) 
 	  }, "jsonp");
 	}
 
         function saveEntry(o, cb) {
-	  $.post("http://35.184.16.176:3000", o, function(res) {
-              if (!res) { return cb(Error('Failed to POST to our srv')) }
+	  $.post("http://35.184.16.176:8000/entry", o, function(res) {
+              //if (!res) { return cb(Error('Failed to POST to our srv')) }
               console.log(res)
 
               return cb(null, res)
-	  }, "jsonp");
+	  });
         }
 
 	function TOSAccept(){
@@ -450,15 +450,20 @@ Parties shall perform the responsibilities and services with reasonable skill an
           $('#tosAccept').attr('disabled', true)
           $('#tosDecline').attr('disabled', true)
 
-          gatherUserEntry(function(err, res) {
-            if (err || !res) { console.log(err); return; }
-            saveEntry(res, function(err, res) {
-              if (err || !res) { console.log(err); return; }
+          gatherUserEntry(function(err, r1) {
+            if (err || !r1) { console.log(err); return; }
+            saveEntry(r1, function(err, r2) {
+              if (err) { console.log(err); return; }
+
+              // Dismiss Modal
+              $('#TAC').modal('hide')
+              
               // Re-enable buttons
               $('#tosAccept').attr('disabled', false)
               $('#tosDecline').attr('disabled', false)
 
 	      localStorage.ZCLAccept = true;
+              console.log('Done.')
             })
           })
 	}
