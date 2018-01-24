@@ -5,6 +5,15 @@ var db = level('./masf-entries-db')
 
 var bodyParser = require('body-parser')
 var cors = require('cors')
+
+const fs = require('fs');
+const http = require('http')
+const https = require('https')
+
+var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
+var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+
 const express = require('express')
 const app = express()
 
@@ -13,6 +22,8 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+
+// Controller Method
 var saveEntry = (req, res) => {
     // See if ip already logged; only log once (?)
     db.get(req.body.ip, function (err, value) {
@@ -34,6 +45,11 @@ var saveEntry = (req, res) => {
 }
 app.post('/entry', saveEntry)
 
-app.listen(8000, () => console.log('Express App listening on port 8000!'))
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
 
+httpServer.listen(8000);
+httpsServer.listen(8443);
+
+console.log('Express App listening on port 8000, 8443!')
 
