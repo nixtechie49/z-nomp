@@ -10,24 +10,26 @@ const app = express()
 
 app.use(cors())
 // parse application/json
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-var saveEntry = function(req, res) {
+var saveEntry = (req, res) => {
     // See if ip already logged; only log once (?)
-console.log(req.body)
     db.get(req.body.ip, function (err, value) {
-      if (err.notFound) {
+      if (!err) {
+        console.log('IP already present - ', value)
+	return res.status(204)
+      } else if (err.notFound) {
         var now = Date.now()
         db.put(req.body.ip, now, function(err) {
-          if (err) return console.log('I/O Error!', err)
+          if (err) return res.status(500).send({err: 'I/O Error!'})
           let o = {ip: req.body.ip, date: now}
           console.log('New User - ', o)
           return res.send(o)
         })
+      } else {
         return res.status(500).send({err: err})
-      }
-
-      return res.status(500).send({err: err})
+      } 
     })
 }
 app.post('/entry', saveEntry)
