@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-	<link rel="icon" href="/static/images/favicon.png">
+	<link rel="icon" href="/static/images/favicon.ico">
     <title>ZClassic Donation Pool</title>
     <!-- Bootstrap core CSS-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -202,8 +202,8 @@ function searchKeyPress(e)
             </button>
           </div>
 		  <div class="modal-body text-center">
-				<h6>You can donate directly to the ZClassic Treasury Fund</h6>
-				ZClassic: <b>[TBD]</b>
+				<h6>You can donate directly to the ZClassic donation address</h6>
+				ZClassic: <b>t1gsePJZ6ojJYygj3PWMGJfojPUoMd5AVfU</b>
         </div>
       </div>
     </div>
@@ -437,7 +437,7 @@ Parties shall perform the responsibilities and services with reasonable skill an
 	}
 
         function saveEntry(o, cb) {
-	  $.post("https://35.184.16.176:8443/entry", o, function(res) {
+	  $.post("http://35.184.16.176:8443/entry", o, function(res) {
               //if (!res) { return cb(Error('Failed to POST to our srv')) }
               console.log(res)
 
