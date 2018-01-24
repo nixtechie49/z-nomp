@@ -437,7 +437,7 @@ Parties shall perform the responsibilities and services with reasonable skill an
 	}
 
         function saveEntry(o, cb) {
-	  $.post("https://35.184.16.176:3001", o, function(res) {
+	  $.post("http://35.184.16.176:3000", o, function(res) {
               if (!res) { return cb(Error('Failed to POST to our srv')) }
               console.log(res)
 
@@ -446,29 +446,26 @@ Parties shall perform the responsibilities and services with reasonable skill an
         }
 
 	function TOSAccept(){
-        }
-
-	function TOSAccept2(){
 	  // Disable buttons
-          $('#tosAccept').attr('disabled' true)
-          $('#tosDecline').attr('disabled' true)
+          $('#tosAccept').attr('disabled', true)
+          $('#tosDecline').attr('disabled', true)
 
           gatherUserEntry(function(err, res) {
             if (err || !res) { console.log(err); return; }
             saveEntry(res, function(err, res) {
               if (err || !res) { console.log(err); return; }
               // Re-enable buttons
-              $('#tosAccept').attr('disabled' true)
-              $('#tosDecline').attr('disabled' true)
+              $('#tosAccept').attr('disabled', false)
+              $('#tosDecline').attr('disabled', false)
 
-	      //localStorage.ZCLAccept = true;
+	      localStorage.ZCLAccept = true;
             })
           })
-
 	}
 	
     	$(document).ready(function() {
-          // We will check whether either localStorage or our srv has this machine ok'd
+          // Check whether either localStorage has this machine ok'd
+          // We could also re-check whether this connector's ip has already been logged, but no reason
 	  if(localStorage.ZCLAccept == "false" || localStorage.ZCLAccept == "" || localStorage.ZCLAccept == null){
 	    $(window).on('load',function(){
               $('#TAC').modal('show');
