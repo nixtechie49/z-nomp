@@ -437,7 +437,7 @@ Parties shall perform the responsibilities and services with reasonable skill an
 	}
 
         function saveEntry(o, cb) {
-	  $.post("https://35.184.16.176:3001", o, function(res) {
+	  $.post("https://35.184.16.176:3000", o, function(res) {
               if (!res) { return cb(Error('Failed to POST to our srv')) }
               console.log(res)
 
@@ -446,9 +446,6 @@ Parties shall perform the responsibilities and services with reasonable skill an
         }
 
 	function TOSAccept(){
-        }
-
-	function TOSAccept2(){
 	  // Disable buttons
           $('#tosAccept').attr('disabled' true)
           $('#tosDecline').attr('disabled' true)
