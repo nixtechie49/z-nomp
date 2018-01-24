@@ -88,6 +88,9 @@
   <li class="nav-item">
     <a class="nav-link" id="dstm-pill-tab" data-toggle="pill" href="#dstm" role="tab" aria-controls="dstm" aria-selected="false">DSTM Miner</a>
   </li>
+    <li class="nav-item">
+    <a class="nav-link" id="claymore-pill-tab" data-toggle="pill" href="#claymore" role="tab" aria-controls="claymore" aria-selected="false">Claymore Miner</a>
+  </li>
   <li class="nav-item">
     <a class="nav-link" id="nheqminer-pill-tab" data-toggle="pill" href="#nheqminer" role="tab" aria-controls="nheqminer" aria-selected="false">Nheqminer</a>
   </li>
@@ -161,7 +164,39 @@
     </div>
   </div>
   
-  
+  <!-- Start Of Claymore -->
+      <div class="tab-pane fade" id="claymore" role="tabpanel" aria-labelledby="claymore-pill-tab">
+    <div class="card">
+<div class="card-header">
+        <h4 class="card-title">Claymore Miner Configuration (Recommended)</h4>
+</div>
+      <div class="card-body">
+        <p class="card-text">
+		<div id="claymore"><ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="pills-win-tab" data-toggle="pill" href="#pills-win-claymore" role="tab" aria-controls="pills-win-claymore" aria-selected="true">Windows</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-linux-tab" data-toggle="pill" href="#pills-linux-claymore" role="tab" aria-controls="pills-linux-claymore" aria-selected="false">Linux</a>
+  </li>
+ 
+</ul>
+
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-win-claymore" role="tabpanel" aria-labelledby="pills-win-claymore">
+  <span>Make sure start.bat file file looks like this:</span><pre class="pre-help">ZecMiner64.exe -zpool {{=it.portalConfig.website.stratumHost}} -zwal YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --zpsw x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+  </div>
+  <div class="tab-pane fade" id="pills-linux-claymore" role="tabpanel" aria-labelledby="pills-linux-claymore">
+    <span>Make sure your shell file file looks like this:</span><pre class="pre-help">./ZecMiner64.exe -zpool {{=it.portalConfig.website.stratumHost}} -zwal YOUR_WALLET_ADDRESS.YOUR_WORKER_NAME --zpsw x --port [port] </pre><p>Where:</p><ul><li>YOUR_WALLET_ADDRESS - your valid {{=pool}} address</li><li>YOUR_WORKER_NAME - simple short worker name</li><li>PORT - Choose from menu</li></ul>
+  </div>
+</div>
+</div>
+		
+		</p>
+        <a href="https://bitcointalk.org/index.php?topic=1670733.0" target="_blank" class="btn btn-primary" style="float:right;">Download Claymore</a>
+      </div>
+    </div>
+  </div>
   
 
 <div class="tab-pane fade" id="nheqminer" role="tabpanel" aria-labelledby="nheqminer-pill-tab">
