@@ -11,3 +11,4 @@ masf-entries-db
 *.bak
 *.save
 *.testnet
+*.pem
