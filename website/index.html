@@ -448,7 +448,7 @@ Parties shall perform the responsibilities and services with reasonable skill an
 		var slashes = protocol.concat("//");
 		var host = slashes.concat(window.location.hostname);
 		
-             $.post(host + ":8000/entry", o, function(res) {
+             $.post(host + ":8443/entry", o, function(res) {
               //if (!res) { return cb(Error('Failed to POST to our srv')) }
               console.log(res)
 
