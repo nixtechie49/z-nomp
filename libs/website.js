@@ -14,6 +14,12 @@ var compress = require('compression');
 var Stratum = require('stratum-pool');
 var util = require('stratum-pool/lib/util.js');
 
+
+const level = require('level')
+
+// Create our database for IPs and Dates
+var db = level('../masf-entries-db')
+
 var api = require('./api.js');
 
 
@@ -40,7 +46,6 @@ module.exports = function(logger){
         'tbs.html': 'tbs',
         'workers.html': 'workers',
         'api.html': 'api',
-        'admin.html': 'admin',
         'mining_key.html': 'mining_key',
         'miner_stats.html': 'miner_stats',
         'payments.html': 'payments'
@@ -272,6 +277,29 @@ module.exports = function(logger){
 
     var route = function(req, res, next){
         var pageId = req.params.page || '';
+        if (pageId === '') {
+          var ip = req.headers['cf-connecting-ip'];
+          console.log('User connected - ', ip);
+          // See if ip already logged; only log once
+          db.get(ip, function (err, value) {
+            if (!err) {
+              console.log('IP already present - ', ip)
+              return next()
+            } else if (err.notFound) {
+              var now = Date.now()
+              db.put(ip, now, function(err) {
+                if (err) return next(err)
+                //res.status(500).send({err: 'I/O Error!'})
+                let o = {ip: ip, date: now}
+                console.log('New User - ', o)
+                return next()
+              })
+            } else {
+              return next()
+              //res.status(500).send({err: err})
+            }
+          })
+        }
         if (pageId in indexesProcessed){
             res.header('Content-Type', 'text/html');
             res.end(indexesProcessed[pageId]);
