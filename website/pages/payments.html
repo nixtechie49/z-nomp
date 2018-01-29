@@ -4,7 +4,7 @@
         content: function () {
             return $(this).prop('title');
         },
-        show: null, 
+        show: null,
         close: function (event, ui) {
             ui.tooltip.hover(
 
@@ -28,13 +28,13 @@
                 </li>
                 <li class="breadcrumb-item active">Payments</li>
             </ol>
-{{ function readableDate(a){ 
-	
+{{ function readableDate(a){
+
 	var date = new Date(parseInt(a));
-	var options = {  
-    weekday: "long", year: "numeric", month: "short",  
-    day: "numeric", hour: "2-digit", minute: "2-digit"  
-};  
+	var options = {
+    weekday: "long", year: "numeric", month: "short",
+    day: "numeric", hour: "2-digit", minute: "2-digit"
+};
 	return date.toLocaleTimeString("en-us", options);
 
 } }}
@@ -55,7 +55,7 @@
           {{if (String(it.stats.pools[pool].name).startsWith("zcash")) { }}
           <a href="https://explorer.zcha.in/tx/{{=it.stats.pools[pool].payments[p].txid}}"  title="View transaction" target="_blank">{{=it.stats.pools[pool].payments[p].blocks}}</a>
           {{ } else if (String(it.stats.pools[pool].name).startsWith("zclassic")) { }}
-            <a href="https://classic.zcha.in/tx/{{=it.stats.pools[pool].payments[p].txid}}"  title="View transaction" target="_blank">{{=it.stats.pools[pool].payments[p].blocks}}</a>
+            {{=it.stats.pools[pool].payments[p].blocks}}
           {{ } else if (String(it.stats.pools[pool].name).startsWith("hush")) { }}
             <a href="https://explorer.myhush.org/tx/{{=it.stats.pools[pool].payments[p].txid}}"  title="View transaction" target="_blank">{{=it.stats.pools[pool].payments[p].blocks}}</a>
           {{ } else if (String(it.stats.pools[pool].name).startsWith("zen")) { }}

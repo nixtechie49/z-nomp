@@ -233,24 +233,24 @@ function paymentList() {
 });
 
 var ZCLMined = 0;
-var totalShares = globalStats.pools.zclassic.poolStats.validShares;
-var minerShares = 0;
 
 var totalBlocks = globalStats.pools.zclassic.poolStats.validBlocks;
-
-var totalPaidOut = totalBlocks * 12.5;
+var totalPaidOut = 0;
 
 if(totalBlocks < 4000){
     for (var i in workerPaymentJson) {		
         for (var p in workerPaymentJson[i].payments) {
-						var blockWork = workerPaymentJson[i].payments[p].work[_miner];
-							if(blockWork){
-								minerShares += blockWork;
+			var totalShares = workerPaymentJson[i].payments[p].shares;
+			var blockWork = 0;
+					var blockWork = workerPaymentJson[i].payments[p].work[_miner];
+						if(blockWork){
+								totalPaidOut += (blockWork / totalShares) * 12.5;
 							}
+
         }
     }
 	
-	ZCLMined = ((minerShares/totalShares) * totalPaidOut).toFixed(4);
+	ZCLMined = (totalPaidOut).toFixed(4);
 	if(!ZCLMined){
 		ZCLMined = 0;
 	}
