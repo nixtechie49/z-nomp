@@ -72,12 +72,7 @@
                         <span class="nav-link-text">Worker Stats</span>
                     </a>
         </li>
-        <li class="nav-item {{? it.selected === 'payments' }}active{{?}}" title="Payments">
-          <a class="nav-link" href="/payments">
-                        <i class="fa fa-fw fa-money"></i>
-                        <span class="nav-link-text">Payments</span>
-                    </a>
-        </li>
+
         <li class="nav-item" title="FAQ">
           <a class="nav-link" href="/faq">
                         <i class="fa fa-fw fa-question-circle"></i>
@@ -88,6 +83,12 @@
           <a class="nav-link" href="http://www.discord.gg/RNenQfx" target="_blank">
                         <i class="fa fa-fw fa-life-ring"></i>
                         <span class="nav-link-text">Support</span>
+                    </a>
+        </li>
+        <li class="nav-item {{? it.selected === 'payments' }}active{{?}}" title="Payments">
+          <a class="nav-link" href="/payments">
+                        <i class="fa fa-fw fa-money"></i>
+                        <span class="nav-link-text">Payments</span>
                     </a>
         </li>
         <li class="nav-item {{? it.selected === 'api' }}active{{?}}" title="API">
@@ -570,7 +571,7 @@
           title: 'Block Found!',
           delay: false,
           msg: '<b>Block:</b><span style="float:right">' + date + '</span><br>' + blockNum + '<br><b>Miner:</b><br>' + miner,
-          sound: 'newblock'
+          sound: 'coinDrop'
         });
       }
 
@@ -578,4 +579,3 @@
     });
   });
 </script>
-
