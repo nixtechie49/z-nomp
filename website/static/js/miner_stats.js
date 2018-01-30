@@ -224,10 +224,14 @@ function toStandardizedDate(epoch) {
 }
 
 function paymentList() {
+
+	//Destory Datatables So New Information Can Be Populated
+	if($.fn.DataTable.isDataTable("#shareTable")){ $("#shareTable").DataTable().clear().destroy(); }
+	if($.fn.DataTable.isDataTable("#pendingBlocksTable")){ $("#pendingBlocksTable").DataTable().clear().destroy(); }
 	
 	//Pending Blocks Section
 	
-	var pendingHTML = "<h6>Pending Blocks</h6><table id='pendingBlocksTable' class='table table-bordered table-sm text-center datatable'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Date Mined</th><th>Mined By</th><th>Status</th></tr></thead><tbody>"
+	var pendingHTML = "<h6>Pending Blocks</h6><table id='pendingBlocksTable' class='table table-bordered table-sm text-center datatable2'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Date Mined</th><th>Mined By</th><th>Status</th></tr></thead><tbody>"
 	
 	for(var i in workerPaymentJson){
 									for(var block in workerPaymentJson[i].pending.blocks){
@@ -238,7 +242,7 @@ function paymentList() {
 								var blockid = workerPaymentJson[i].pending.blocks[block].split(":")[2];
 								var hex = workerPaymentJson[i].pending.blocks[block].split(":")[0];
 								var confirms = workerPaymentJson[i].pending.confirms[hex];
-								pendingHTML += "<tr><td><a href='https://zcl-explorer.com/insight/block/" + hex + " target='blank''>" +  blockid + "</a></td><td>" + toStandardizedDate(date) + "</td><td>" + pendingBlockFinder + "</td><td><span style='color:red;'><i class='fa fa-spinner fa-spin'></i>&nbsp;" +  confirms + "</span></td></tr>";
+								pendingHTML += '<tr><td><a href="https://zcl-explorer.com/insight/block/' + hex + '" target="_blank">' +  blockid + "</a></td><td>" + toStandardizedDate(date) + "</td><td>" + pendingBlockFinder + "</td><td><span style='color:red;'><i class='fa fa-spinner fa-spin'></i>&nbsp;" +  confirms + "</span></td></tr>";
 	}
 	}
 	
@@ -259,7 +263,7 @@ var totalBlocks = globalStats.pools.zclassic.blocks.confirmed;
 var totalPaidOut = 0;
 var totalPoolPayout = totalBlocks * 12.5;
 
-var html = "<h6>Block Share Breakdown</h6><table id='pendingBlocksTable' class='table table-bordered table-sm text-center datatable2'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Shares</th><th>Block Share %</th><th>ZCL Mined</th></tr></thead><tbody>"
+var html = "<h6>Block Share Breakdown</h6><table id='shareTable' class='table table-bordered table-sm text-center datatable'><thead style='background:#343a40;color:white'><tr><th>Block</th><th>Shares</th><th>Block Share %</th><th>ZCL Mined</th></tr></thead><tbody>"
 
     for (var i in workerPaymentJson) {		
         for (var p in workerPaymentJson[i].payments) {
@@ -288,14 +292,17 @@ var html = "<h6>Block Share Breakdown</h6><table id='pendingBlocksTable' class='
 	
 	$("div#shareTableDiv").html(html);
 	
-				 $('table.datatable').dataTable({
-				"order": [[0, "asc"]],
+	
+
+				$('table.datatable').dataTable({
+				"order": [[0, "desc"]],
 				"pageLength": 5,
 				"bLengthChange": false,
 				"searching": false
 			});
-				$('table.datatable2').dataTable({
-				"order": [[0, "desc"]],
+			
+							 $('table.datatable2').dataTable({
+				"order": [[0, "asc"]],
 				"pageLength": 5,
 				"bLengthChange": false,
 				"searching": false
