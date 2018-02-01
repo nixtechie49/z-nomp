@@ -10,6 +10,7 @@ var totalPaid;
 var totalShares;
 
 var globalStats;
+var workerPaymentJson;
 
 function getReadableHashRateString(hashrate) {
     hashrate = (hashrate * 2);
@@ -164,7 +165,15 @@ function updateStats() {
     $("#statsTotalImmature").text(totalImmature);
     //$("#statsTotalBal").text(totalBal);
     //$("#statsTotalPaid").text(totalPaid);
-    var totalShares = statData.totalShares;
+	
+	var totalShares = statData.totalShares;
+	
+	if(totalShares === 0){
+	for(var x in statData.workers){
+		totalShares += statData.workers[x].currRoundShares;
+	}
+}
+    
     var estimatedCoins = 0;
     totalShares = totalShares.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     $("#statsTotalShares").text(totalShares);
@@ -201,7 +210,8 @@ function addWorkerToDisplay(name, htmlSafeName, workerObj) {
     htmlToAdd += '<p><i class="fa fa-cog"></i> <small>Shares:</small> <span id="statsShares' + htmlSafeName + '">' + (Math.round(workerObj.currRoundShares * 100) / 100) + '</span></p>';
     htmlToAdd += '<p><i class="fa fa-gavel"></i> <small>Luck <span id="statsLuckDays' + htmlSafeName + '">' + workerObj.luckDays + '</span> Days</small></p>';
     //htmlToAdd += '<p><i class="fa fa-money"></i> <small>Bal: <span id="statsBalance' + htmlSafeName + '">' + workerObj.balance + '</span></small></p>';
-    //htmlToAdd += '<p><i class="fa fa-money"></i> <small>Paid: <span id="statsPaid' + htmlSafeName + '">' + workerObj.paid + '</span></small></p></div></div></div>';
+    //htmlToAdd += '<p><i class="fa fa-money"></i> <small>Paid: <span id="statsPaid' + htmlSafeName + '">' + workerObj.paid + '</span></small></p>';
+	htmlToAdd += '</div></div></div>'
     return htmlToAdd;
 
 	
@@ -268,13 +278,13 @@ var html = "<h6>Block Share Breakdown</h6><table id='shareTable' class='table ta
     for (var i in workerPaymentJson) {		
         for (var p in workerPaymentJson[i].payments) {
 			if(p > 4000){ return }
-			var totalShares = workerPaymentJson[i].payments[p].shares;
+			var totalMinerShares = workerPaymentJson[i].payments[p].shares;
 			var blockNum = workerPaymentJson[i].payments[p].blocks[0];
 			var blockWork = 0;
 					var blockWork = workerPaymentJson[i].payments[p].work[_miner];
 						if(blockWork){
-								html += "<tr><td>" +  blockNum + "</td><td>" + blockWork + "</td><td>" + (((blockWork/totalShares)*100)).toFixed(2) + "</td><td>" +  (((blockWork / totalShares) * 12.5)).toFixed(6) + "</td></tr>"
-								totalPaidOut += (blockWork / totalShares) * 12.5;
+								html += "<tr><td>" +  blockNum + "</td><td>" + blockWork + "</td><td>" + (((blockWork/totalMinerShares)*100)).toFixed(2) + "</td><td>" +  (((blockWork / totalMinerShares) * 12.5)).toFixed(6) + "</td></tr>"
+								totalPaidOut += (blockWork / totalMinerShares) * 12.5;
 							}
         }
     }
@@ -379,11 +389,23 @@ $.getJSON('/api/worker_stats?' + _miner, function(data) {
         });
 		
 				setInterval(function(){ 
-		paymentList(true);
-		}, 60000);	
+				        $.getJSON('/api/payments', function(data) {
+			
+			$.getJSON('/api/stats', function(gStatsData) {
+			globalStats = gStatsData;
+			workerPaymentJson = data;
+			paymentList();
+		
+		});
+            
+        });
+		}, 150000);	
 		
 		
 		statsSource.addEventListener('message', function(e) {
+			
+			
+			
     $.getJSON('/api/worker_stats?' + _miner, function(data) {
         statData = data;
         var wc = 0;

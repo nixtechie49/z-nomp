@@ -1182,7 +1182,7 @@ function SetupForPool(logger, poolOptions, setupFinished){
                                 
                                 callback(null, workers, rounds, paymentsUpdate);
 						
-					} else {
+					} else if(overridePayments === false) {
                     // POINT OF NO RETURN! GOOD LUCK!
                     // WE ARE SENDING PAYMENT CMD TO DAEMON
                     
