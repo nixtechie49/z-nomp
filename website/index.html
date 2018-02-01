@@ -54,6 +54,12 @@
                         <span class="nav-link-text">Connection Information</span>
                     </a>
         </li>
+<!--                 <li class="nav-item {{? it.selected === 'contributions' }}active{{?}}"  title="contributions">
+                    <a class="nav-link" href="/contributions">
+                        <i class="fa fa-fw fa-area-chart"></i>
+                        <span class="nav-link-text">All Contributions</span>
+                    </a>
+                </li> -->
         <li class="nav-item {{? it.selected === 'stats' }}active{{?}}" title="Graph Stats">
           <a class="nav-link" href="/stats">
                         <i class="fa fa-fw fa-area-chart"></i>
@@ -550,16 +556,8 @@
       var miner = block[3];
       var date = (new Date(parseInt(block[4]))).toLocaleString();
       var storedBlock = localStorage.vmlastBlockStored;
-      if (!storedBlock) {
-        localStorage.vmlastBlockStored = blockNum;
-        storedBlock = blockNum;
-      }
-      if (pendingBlock && storedBlock < blockNum) {
-        BlockNotify();
-        localStorage.vmlastBlockStored = blockNum;
-      }
-
-      function BlockNotify() {
+	  
+	        function BlockNotify() {
         Lobibox.notify('success', {
           size: 'large',
           iconSource: "fontAwesome",
@@ -570,6 +568,17 @@
           msg: '<b>Block:</b><span style="float:right">' + date + '</span><br>' + blockNum + '<br><b>Miner:</b><br>' + miner,
           sound: 'coinDrop'
         });
+	  
+      if (!storedBlock) {
+        localStorage.vmlastBlockStored = blockNum;
+        storedBlock = blockNum;
+      }
+      if (pendingBlock && storedBlock < blockNum) {
+        BlockNotify();
+        localStorage.vmlastBlockStored = blockNum;
+      }
+
+
       }
 
 

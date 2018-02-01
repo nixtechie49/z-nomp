@@ -87,7 +87,10 @@
 
       We have switched to an auction system, you can read more about it <a href="https://redd.it/7txoej" target="_blank"> Here</a><br /><br />
 
-      The amounts shown should be accurately reflected now, if it is still showing odd values there may be a browser or cloudflare cache issue, please try and use SHIFT + Refresh.<br /><br />
+      ATTENTION MINERS: The stats on the website were only showing our first 100 blocks, so as you were continuing to mine your ZCL amount decreses, it was not really decreasing as we have the numbers in the database,
+      the front end stats were just not displaying correctly. ****UPDATE**** This issue has been resolved.<br /><br />
+
+      Also, We have changed the pool payout type to PPLNT! <br /><br />
 
       Mine along,<br />
       The Bitcoin Private &amp; Zclassic Team
@@ -171,7 +174,7 @@
 			            <div class="card mb-3">
                 <div class="card-header">
                     <i class="fa fa-area-chart"></i>&nbsp;Donation Progress&nbsp;<span class="badge badge-primary badge-pill" id="statsCompletion{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000 Blocks ({{=((it.stats.pools[pool].blocks.confirmed/4000)*100).toFixed(2)}}%)</span>
-                    &nbsp;<span class="badge badge-primary badge-pill" id="statsCompletionPercentage{{=pool}}" style="float:right">Donation End date, Feburary 25th 2018.</span>
+                    &nbsp;<span class="badge badge-primary badge-pill" id="statsCompletionPercentage{{=pool}}" style="float:right">Donation End date, February 25th 2018.</span>
 
                 </div>
                 <div class="card-body">
