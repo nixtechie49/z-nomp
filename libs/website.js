@@ -49,7 +49,8 @@ module.exports = function(logger){
         'mining_key.html': 'mining_key',
         'miner_stats.html': 'miner_stats',
         'faq.html': 'faq',
-        'payments.html': 'payments'
+        'payments.html': 'payments',
+		'contributions.html': 'contributions'
     };
 
     var pageTemplates = {};

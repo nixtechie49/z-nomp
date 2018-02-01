@@ -2,7 +2,6 @@ var workerHashrateData;
 var workerHashrateChart;
 var workerHistoryMax = 160;
 var statData;
-var poolData;
 var totalHash;
 var totalImmature;
 var totalBal;
@@ -403,9 +402,6 @@ $.getJSON('/api/worker_stats?' + _miner, function(data) {
 		
 		
 		statsSource.addEventListener('message', function(e) {
-			
-			
-			
     $.getJSON('/api/worker_stats?' + _miner, function(data) {
         statData = data;
         var wc = 0;
@@ -425,9 +421,6 @@ $.getJSON('/api/worker_stats?' + _miner, function(data) {
         if (!rebuilt) {
             updateWorkerStats();
         }
-    });
-    $.getJSON('/api/stats', function(data) {
-        poolData = data;
     });
 });
 
