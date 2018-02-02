@@ -398,10 +398,10 @@ $.getJSON('/api/worker_stats?' + _miner, function(data) {
 		});
             
         });
-		}, 150000);	
+		}, 6000000);	
 		
 		
-		statsSource.addEventListener('message', function(e) {
+		setInterval(function(){ 
     $.getJSON('/api/worker_stats?' + _miner, function(data) {
         statData = data;
         var wc = 0;
@@ -422,5 +422,5 @@ $.getJSON('/api/worker_stats?' + _miner, function(data) {
             updateWorkerStats();
         }
     });
-});
+},150000);
 
