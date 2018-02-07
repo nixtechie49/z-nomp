@@ -167,12 +167,13 @@
 {{ var blockscomb = new Array; }}
 <div class="row">
 
-<table class="table table-small text-center h6">
+<table class="table table-small text-center h6" id="blockCountTable">
 <tr>
-	<td colspan="2" class="h5 text-center">{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Blocks Found</td></tr>
+	<td colspan="3" class="h5 text-center">{{=capitalizeFirstLetter(it.stats.pools[pool].name)}} Blocks Found</td></tr>
 
-            <tr><td style="width:50%"><i class="fa fa-cubes"></i> <span id="statsValidBlocks{{=pool}}">{{=it.stats.pools[pool].poolStats.validBlocks}} Blocks Found<br />(Total - includes orphaned and pending)</span> </td>
-			<td style="width:50%"><i class="fa fa-money"></i> Paid: <span id="statsTotalPaid{{=pool}}">{{=(parseFloat(it.stats.pools[pool].poolStats.totalPaid)).toFixed(2)}} {{=it.stats.pools[pool].symbol}}</span> </small></td>
+            <tr><td style="width:33%"><i class="fa fa-cubes"></i> <span id="statsValidBlocks{{=pool}}">{{=it.stats.pools[pool].poolStats.validBlocks}} Blocks Found<br />(Total - includes orphaned and pending)</span> </td>
+              <td style="width:33%"><i class="fa fa-cubes"></i>  Blocks Found Today </td>
+			<td style="width:33%"><i class="fa fa-money"></i> Paid: <span id="statsTotalPaid{{=pool}}">{{=(parseFloat(it.stats.pools[pool].poolStats.totalPaid)).toFixed(2)}} {{=it.stats.pools[pool].symbol}}</span> </small></td>
 			</tr>
 			</table>
 </div>
@@ -249,6 +250,18 @@
 <script>
     document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/stats.js';
 </script>
+
+<script>
+var table = document.getElementsByTagName('#blocksTable')[0],
+    rows = table.getElementsByTagName('tr'),
+    text = 'textContent' in document ? 'textContent' : 'innerText';
+
+for (var i = 0, len = rows.length; i < len; i++){
+    rows[i].children[0][text] = i + ': ' + rows[i].children[0][text];
+}
+</script>
+
+
 <script>
 
 
@@ -257,11 +270,8 @@ $(document).ready(function() {
 		"order": [[0, "desc"]]
   });
 });
-
-	window.statsSource = new EventSource("/api/live_stats");
-    $(function() {
-        statsSource.addEventListener('message', function (e) {
-            var stats = JSON.parse(e.data);
+setInterval(function(){
+		$.getJSON('/api/stats', function(stats){
             for (var pool in stats.pools) {
 				$('#statsMiners' + pool).text(stats.pools[pool].minerCount);
                 $('#statsWorkers' + pool).text(stats.pools[pool].workerCount);
@@ -276,7 +286,7 @@ $(document).ready(function() {
 				$('#statsNetworkConnections' + pool).text(stats.pools[pool].poolStats.networkConnections);
             }
         });
-    });
+    },150000);
 
 	function getReadableNetworkHashRateString(hashrate){
 		hashrate = (hashrate * 1000000);

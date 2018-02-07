@@ -109,6 +109,7 @@ $.getJSON('/api/pool_stats', function(data){
     displayCharts();
 });
 
+setInterval(function(){ 
 $.getJSON('/api/stats', function(stats){
     statData.push(stats);
 
@@ -140,3 +141,4 @@ $.getJSON('/api/stats', function(stats){
         triggerChartUpdates();
     }
 });
+},300000);
