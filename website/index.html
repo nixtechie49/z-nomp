@@ -20,7 +20,6 @@
   <link href="/static/css/sb-admin.css" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/nvd3.css">
   <link rel="stylesheet" href="/static/css/site.css">
-  <link rel="stylesheet" href="/static/css/lobibox.css">
 
 </head>
 <!-- <body class="fixed-nav sticky-footer bg-dark" id="page-top"> -->
@@ -151,7 +150,7 @@
   <!-- Bootstrap core JavaScript-->
 
 
-  <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/jquery/jquery.min.js"></script> 
   <!-- Core plugin JavaScript-->
   <script src="/static/js/bootstrap.bundle.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
@@ -169,14 +168,13 @@
   <script src="/static/js/nvd3.js"></script>
   <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-  <script src="/static/js/lobibox.js"></script>
 
   <script type="text/javascript">
     function searchKeyPress(e) {
       // look for window.event in case event isn't passed in
       e = e || window.event;
       if (e.keyCode == 13) {
-        document.getElementById('btnSearch').click();
+        window.location = "/workers/" + $('.minersearchinput').val();
         return false;
       }
       return true;
@@ -445,7 +443,7 @@ ZClassic: <b>t1gsePJZ6ojJYygj3PWMGJfojPUoMd5AVfU</b><br><font size="2">Donations
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" id="tosAccept" class="btn btn-primary" data-dismiss="modal" onclick="TOSAccept();">Accept</button>
+                <button type="button" id="tosAccept" class="btn btn-primary" data-dismiss="modal" onclick="TOSAcceptOld();">Accept</button>
                 <button type="button" id="tosDecline" class="btn btn-danger" onclick="window.location.href='https://zclassic.org'">Decline</button>
               </div>
             </div>

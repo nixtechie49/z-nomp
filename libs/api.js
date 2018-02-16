@@ -15,8 +15,20 @@ module.exports = function(logger, portalConfig, poolConfigs){
 
         switch(req.params.method){
             case 'stats':
+				if (req.url.indexOf("?")>0) {
+				var url_parms = req.url.split("?");
+				if (url_parms.length > 0) {
+					if(url_parms[1] === "validBlocks"){
+					for(var pool in portalStats.stats.pools) {
+                res.header('Content-Type', 'application/json');
+                res.end(portalStats.stats.pools[pool].poolStats.validBlocks);
+				}
+                }
+				}
+				} else {
                 res.header('Content-Type', 'application/json');
                 res.end(portalStats.statsString);
+				}
                 return;
             case 'pool_stats':
                 res.header('Content-Type', 'application/json');
@@ -28,6 +40,7 @@ module.exports = function(logger, portalConfig, poolConfigs){
                     res.header('Content-Type', 'application/json');
                     res.end(JSON.stringify(data));                                        
                 });
+			
                 break;
             case 'payments':
                 var poolBlocks = [];

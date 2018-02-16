@@ -8,7 +8,7 @@ var totalBal;
 var totalPaid;
 var totalShares;
 
-var globalStats;
+var validBlocks;
 var pending;
 
 function getReadableHashRateString(hashrate) {
@@ -280,7 +280,7 @@ var html = "<h6>Block Share Breakdown</h6><table id='shareTable' class='table ta
 
 	html += "</tbody></table>"
 
-	var totalBlocks = globalStats.pools.zclassic.blocks.confirmed;
+	var totalBlocks = validBlocks;
 	var totalPaidOut = statData.totalZCL;
 	var totalPoolPayout = totalBlocks * 12.5;
 	var BTCPOwed = 62500 * (totalPaidOut/totalPoolPayout);
@@ -359,8 +359,8 @@ $.getJSON('/api/worker_stats?' + _miner, function(data) {
 
 				$.getJSON('/api/payments?pending', function(data) {
 			pending = data;
-				$.getJSON('/api/stats', function(gStatsData) {
-			globalStats = gStatsData;
+				$.getJSON('/api/stats?validBlocks', function(blocks) {
+			validBlocks = blocks;
 			paymentList();
 				});
 				});

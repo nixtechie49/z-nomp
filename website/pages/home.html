@@ -78,7 +78,7 @@ data-target="#giveawayModal">10 of 10 blocks found</a>]</b></div></div> </div> -
 
       <div class="alert alert-warning" role="alert">
       <h4 class="alert-heading"> Dear Miners:</h4>
-      <h6>Welcome to the official ZClassic/Bitcoin Private Voluntary Miner Donation Program. Our unique system gives miners the ability to earn up to 10-15 Bitcoin Private per ZCL mined,
+      <h6>Welcome to the official ZClassic/Bitcoin Private Voluntary Miner Donation Program. Our unique system gives miners the ability to earn up to 3-5 Bitcoin Private per ZCL mined,
       with a guaranteed minimum of 1.25 BTCP per ZCL mined. More details on this auction style set up can be found <a href="https://redd.it/7txoej" target="_blank">here.</a><br /><br /><h6>
 
       <h6>Don't have a mining rig setup? Not a problem. Read here to see how you setup Nicehash online in under 10 minutes to mine ZCL. NO hardware setup required!
@@ -158,13 +158,13 @@ data-currency="zclassic" data-base="USD" data-secondary="BTC" data-ticker="true"
 			            <div class="card mb-3">
                 <div class="card-header">
                     <i class="fa fa-area-chart"></i>&nbsp;Donation Progress&nbsp;<span class="badge badge-primary badge-pill"
-id="statsCompletion{{=pool}}">{{=it.stats.pools[pool].blocks.confirmed}} of 4000 Blocks ({{=((it.stats.pools[pool].blocks.confirmed/4000)*100).toFixed(2)}}%)</span>
+id="statsCompletion{{=pool}}">{{=(it.stats.pools[pool].blocks.confirmed*12.5)}} of 50000 ZCL ({{=(((it.stats.pools[pool].blocks.confirmed*12.5)/50000)*100).toFixed(2)}}%)</span>
                     &nbsp;<span class="badge badge-primary badge-pill" id="statsCompletionPercentage{{=pool}}" style="float:right">Donation End date, February 28th 2018.</span>
                 </div>
                 <div class="card-body">
 						<div class="progress">
-  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{=it.stats.pools[pool].blocks.confirmed}}" aria-valuemin="0" aria-valuemax="100"
-style="width: {{=(it.stats.pools[pool].blocks.confirmed/4000)*100}}%"></div> </div> </div>
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{=(it.stats.pools[pool].blocks.confirmed*12.5)}}" aria-valuemin="0" aria-valuemax="50000"
+style="width: {{=((it.stats.pools[pool].blocks.confirmed*12.5)/50000)*100}}%"></div> </div> </div>
                 </div>
             </div>
 			</div> <div class="row">
@@ -182,8 +182,10 @@ style="width: {{=(it.stats.pools[pool].blocks.confirmed/4000)*100}}%"></div> </d
                 </div>
             </div>
 			</div>
-			</div> <script>
-    document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/stats.js'; </script> <script>
+			</div>
+ <script>
+    document.querySelector('main').appendChild(document.createElement('script')).src = '/static/js/stats.js'; </script>
+<!--  <script>
     $(document).ready(function() {
 
 		$.getJSON('/api/stats', function(stats) {
@@ -210,16 +212,4 @@ style="width: {{=(it.stats.pools[pool].blocks.confirmed/4000)*100}}%"></div> </d
             }
         });
     });
-</script>
-<script>
-
-$(document).ready(function() {
-    var blink = $('#blink_me');
-function runIt() {
- blink.animate({opacity:'+=1'}, 250);
- blink.animate({opacity:'-=0.9'}, 250, runIt);
-}
-    runIt();
-});
-
-</script>
+</script> -->

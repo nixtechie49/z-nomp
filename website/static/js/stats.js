@@ -109,9 +109,9 @@ $.getJSON('/api/pool_stats', function(data){
     displayCharts();
 });
 
-setInterval(function(){ 
+setTimeout(function(){
 $.getJSON('/api/stats', function(stats){
-    statData.push(stats);
+     statData.push(stats);
 
     var newPoolAdded = (function(){
         for (var p in stats.pools){
@@ -119,13 +119,13 @@ $.getJSON('/api/stats', function(stats){
                 return true;
         }
         return false;
-    })();
+    })(); 
 
-    if (newPoolAdded || Object.keys(stats.pools).length > poolKeys.length){
+     if (newPoolAdded || Object.keys(stats.pools).length > poolKeys.length){
         buildChartData();
         displayCharts();
-    }
-    else {
+    
+     } else {
         var time = stats.time * 1000;
         for (var f = 0; f < poolKeys.length; f++) {
             var pool =  poolKeys[f];
@@ -139,6 +139,6 @@ $.getJSON('/api/stats', function(stats){
             }
         }
         triggerChartUpdates();
-    }
+    } 
 });
-},300000);
+},150000);

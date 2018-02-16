@@ -8,7 +8,7 @@ var redis = require('redis');
 
 var dot = require('dot');
 var express = require('express');
-var logger2 = require('express-logger');
+////var logger2 = require('express-logger');
 
 
 var bodyParser = require('body-parser');
@@ -18,10 +18,10 @@ var Stratum = require('stratum-pool');
 var util = require('stratum-pool/lib/util.js');
 
 
-const level = require('level');
+//const level = require('level');
 
 // Create our database for IPs and Dates
-var db = level('../masf-entries-db');
+//var db = level('../masf-entries-db');
 
 var api = require('./api.js');
 
@@ -278,8 +278,19 @@ module.exports = function(logger){
         else
             next();
     };
+	
+	    var route = function(req, res, next){
+        var pageId = req.params.page || '';
+        if (pageId in indexesProcessed){
+            res.header('Content-Type', 'text/html');
+            res.end(indexesProcessed[pageId]);
+        }
+        else
+            next();
 
-    var route = function(req, res, next){
+    };
+
+/*     var route = function(req, res, next){
         var pageId = req.params.page || '';
         if (pageId === '') {
           var ip = req.headers['cf-connecting-ip'] || '';
@@ -311,13 +322,13 @@ module.exports = function(logger){
         else
             next();
 
-    };
+    }; */
 
 
 
     var app = express();
     //app.use(expressLogging(logger));
-    app.use(logger2({path: "/home/ubuntu/z-nomp/traffic.txt"}));
+    ////app.use(logger2({path: "/home/ubuntu/z-nomp/traffic.txt"}));
     app.use(bodyParser.json());
     //logger.info('Request from %s: %s %s', clientIpAddress, requestMethod, requestUrl);
     app.get('/get_page', function(req, res, next){
