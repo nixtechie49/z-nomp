@@ -43,7 +43,7 @@ try {
 
 //Try to give process ability to handle 100k concurrent connections
 try{
-    var posix = require('posix');
+    var posix = require("posix")
     try {
         posix.setrlimit('nofile', { soft: 100000, hard: 100000 });
     }
@@ -508,14 +508,14 @@ var startProfitSwitch = function(){
 
     poolConfigs = buildPoolConfigs();
 
-    spawnPoolWorkers();
+    //spawnPoolWorkers();
 
-    startPaymentProcessor();
+    //startPaymentProcessor();
 
     startWebsite();
 
-    startProfitSwitch();
+    //startProfitSwitch();
 
-    startCliListener();
+    //startCliListener();
 
 })();
