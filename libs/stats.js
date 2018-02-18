@@ -217,8 +217,14 @@ module.exports = function(logger, portalConfig, poolConfigs){
     }
 
     this.getCoins = function(cback){
-        _this.stats.coins = redisClients[0].coins;
-        cback();
+        var coins = [];
+        async.each(_this.stats.pools, function(pool, pcb) {
+            coins.push(pool.name);
+            pcb();
+        }, function(err) {
+            _this.stats.coins = coins;
+            cback(coins);
+        });
     };
     
     this.getPayout = function(address, cback){
