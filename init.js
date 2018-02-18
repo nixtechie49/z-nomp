@@ -463,7 +463,11 @@ var startPaymentProcessor = function(){
     });
 };
 
-
+var web_worker;
+setInterval(function(){
+	console.log("Time to re-spawn website worker, killing worker, PID:"+web_worker.process.pid);
+        web_worker.kill();
+}, 3600000);
 var startWebsite = function(){
 
     if (!portalConfig.website.enabled) return;
@@ -473,6 +477,7 @@ var startWebsite = function(){
         pools: JSON.stringify(poolConfigs),
         portalConfig: JSON.stringify(portalConfig)
     });
+	web_worker = worker;
     worker.on('exit', function(code, signal){
         logger.error('Master', 'Website', 'Website process died, spawning replacement...');
         setTimeout(function(){

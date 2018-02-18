@@ -21,26 +21,30 @@ module.exports = function(logger, portalConfig, poolConfigs){
 					if(url_parms[1] === "validBlocks"){
 					for(var pool in portalStats.stats.pools) {
                 res.header('Content-Type', 'application/json');
-                res.end(portalStats.stats.pools[pool].poolStats.validBlocks);
+           	res.header('Cache-control', 'public, max-age=300');
+        	res.end(portalStats.stats.pools[pool].poolStats.validBlocks);
 				}
                 }
 				}
 				} else {
                 res.header('Content-Type', 'application/json');
+                res.header('Cache-control', 'public, max-age=300');
                 res.end(portalStats.statsString);
 				}
+
                 return;
             case 'pool_stats':
                 res.header('Content-Type', 'application/json');
+                res.header('Cache-control', 'public, max-age=300');
                 res.end(JSON.stringify(portalStats.statPoolHistory));
                 return;
             case 'blocks':
             case 'getblocksstats':
                 portalStats.getBlocks(function(data){
-                    res.header('Content-Type', 'application/json');
-                    res.end(JSON.stringify(data));                                        
+                res.header('Content-Type', 'application/json');
+                res.header('Cache-control', 'public, max-age=300');
+                res.end(JSON.stringify(data));
                 });
-			
                 break;
             case 'payments':
                 var poolBlocks = [];

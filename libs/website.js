@@ -10,6 +10,7 @@ var dot = require('dot');
 var express = require('express');
 var logger2 = require('express-logger');
 
+const memwatch = require('memwatch-next');
 
 var bodyParser = require('body-parser');
 var compress = require('compression');
@@ -24,6 +25,13 @@ const level = require('level');
 var db = level('../masf-entries-db');
 
 var api = require('./api.js');
+
+// Patch console.x methods in order to add timestamp information
+require('console-stamp')(console, { pattern: 'mm/dd/yyyy HH:MM:ss.l' });
+
+memwatch.on('leak', (info) => {
+  console.error('Memory leak detected:\n', info);
+});
 
 
 module.exports = function(logger){
@@ -372,7 +380,7 @@ module.exports = function(logger){
     });
 
     app.use(compress());
-    app.use('/static', express.static('website/static'));
+    app.use('/static', express.static('website/static',{maxAge: '1d'}));
 
     app.use(function(err, req, res, next){
         console.error(err.stack);
