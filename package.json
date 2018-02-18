@@ -34,6 +34,7 @@
         "url": "https://github.com/zencashio/z-nomp.git"
     },
     "dependencies": {
+        "1.1.1": "^1.0.0",
         "async": "2.3.0",
         "bignum": "0.12.5",
         "body-parser": "^1.17.1",
@@ -42,7 +43,7 @@
         "console-stamp": "^0.2.6",
         "cors": "^2.8.4",
         "dateformat": "2.0.0",
-        "dot": "1.1.1",
+        "dot": "^1.1.2",
         "express": "^4.15.2",
         "express-logger": "0.0.3",
         "express-logging": "^1.1.1",

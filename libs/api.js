@@ -63,10 +63,12 @@ module.exports = function(logger, portalConfig, poolConfigs){
                 } */
 				}
                 res.header('Content-Type', 'application/json');
-                res.end(JSON.stringify(poolBlocks));
+		res.header('Cache-control', 'public, max-age=300');
+		res.end(JSON.stringify(poolBlocks));
                 return;
 			case 'worker_stats':
 				res.header('Content-Type', 'application/json');
+				res.header('Cache-control', 'public, max-age=300');
 				if (req.url.indexOf("?")>0) {
 				var url_parms = req.url.split("?");
 				if (url_parms.length > 0) {

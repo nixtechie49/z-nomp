@@ -27,7 +27,7 @@ var db = level('../masf-entries-db');
 var api = require('./api.js');
 
 // Patch console.x methods in order to add timestamp information
-require('console-stamp')(console, { pattern: 'mm/dd/yyyy HH:MM:ss.l' });
+require('console-stamp')(console, { pattern: 'mm/dd/yyyy hh:MM:ss.l' });
 
 memwatch.on('leak', (info) => {
   console.error('Memory leak detected:\n', info);
